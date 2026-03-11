@@ -2,32 +2,23 @@ import asyncio
 import logging
 import os
 import traceback
-
-from dotenv import load_dotenv
-from videosdk.agents import (
-	Agent,
-	AgentSession,
-	JobContext,
-	Options,
-	RealTimePipeline,
-	RoomOptions,
-	WorkerJob,
-)
+from videosdk.agents import Agent,AgentSession,JobContext,Options,RealTimePipeline,RoomOptions,WorkerJob
 from videosdk.plugins.google import GeminiLiveConfig, GeminiRealtime
-
-logging.basicConfig(level=logging.INFO)
+from tools.tools import book_appointment , list_appointments ,cancel_appointment , get_current_date_time
+from dotenv import load_dotenv
 
 load_dotenv()
 
-
-# Define the agent's behavior and personality
+logging.basicConfig(level=logging.INFO)
 class MyVoiceAgent(Agent):
 	def __init__(self):
 		super().__init__(
 			instructions=(
-				"You are a helpful AI assistant that answers phone calls. "
-				"Keep your responses concise and friendly."
+				"You are a helpful voice assistant that can help users "
+                "book appointments, list appointments, "
+                "cancel appointments and check the current time."
 			),
+			tools=[book_appointment,list_appointments,cancel_appointment,get_current_date_time],
 		)
 
 	async def on_enter(self) -> None:
@@ -38,7 +29,7 @@ class MyVoiceAgent(Agent):
 
 
 async def start_session(context: JobContext):
-	# Configure the Gemini model for real-time voice.
+	
 	model = GeminiRealtime(
 		model="gemini-2.5-flash-native-audio-preview-12-2025",
 		api_key=os.getenv("GOOGLE_API_KEY"),
@@ -66,11 +57,11 @@ def make_context() -> JobContext:
 
 if __name__ == "__main__":
 	try:
-		# Register the agent with a unique ID.
+		
 		options = Options(
-			agent_id="MyTelephonyAgent",  # Unique identifier for routing.
-			register=True,  # Register with VideoSDK for telephony.
-			max_processes=10,  # Concurrent calls to handle.
+			agent_id="MyTelephonyAgent",
+			register=True,  
+			max_processes=10,
 			host="localhost",
 			port=8081,
 		)
