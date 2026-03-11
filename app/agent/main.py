@@ -14,15 +14,18 @@ class MyVoiceAgent(Agent):
 	def __init__(self):
 		super().__init__(
 			instructions=(
-				"You are a helpful voice assistant that can help users "
-                "book appointments, list appointments, "
-                "cancel appointments and check the current time."
+				"You are a helpful voice assistant that can help users with appointment booking only"
+                "book appointments, list appointments, cancel appointments and check the current time."
+				"you require name email appointment time and reason for appointment for booking"
+				"while booking the appoint always make sure you are booking it on future date not on the past date"
+				"you can get current time and date using the get_current_date_time tool"
+				"also before booking the appointment always check if there isnt alredy appointment is booked on the same time"
 			),
 			tools=[book_appointment,list_appointments,cancel_appointment,get_current_date_time],
 		)
 
 	async def on_enter(self) -> None:
-		await self.session.say("Hello! I'm your real-time assistant. How can I help you today?")
+		await self.session.say("Hello! I'm Ni-map AI Assistant How can I help you today?")
 
 	async def on_exit(self) -> None:
 		await self.session.say("Goodbye! It was great talking with you!")
