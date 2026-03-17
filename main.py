@@ -4,7 +4,7 @@ import os
 import traceback
 from videosdk.agents import Agent,AgentSession,JobContext,Options,RealTimePipeline,RoomOptions,WorkerJob
 from videosdk.plugins.google import GeminiLiveConfig, GeminiRealtime
-from tools.tools import book_appointment , list_appointments ,cancel_appointment , get_current_date_time
+from app.tools.tools import book_appointment , list_appointments ,cancel_appointment , get_current_date_time
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -25,7 +25,7 @@ class MyVoiceAgent(Agent):
 		)
 
 	async def on_enter(self) -> None:
-		await self.session.say("Hello! I'm Ni-map AI Assistant How can I help you today?")
+		await self.session.say("Hello! I'm Neemap infotech AI Assistant How can I help you today?")
 
 	async def on_exit(self) -> None:
 		await self.session.say("Goodbye! It was great talking with you!")

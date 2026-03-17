@@ -1,5 +1,5 @@
 from langchain_core.tools import tool
-from database.crud import create_appointment, get_appointments, delete_appointment
+from app.database.crud import create_appointment, get_appointments, delete_appointment
 from videosdk.agents import function_tool
 from datetime import datetime
 import pytz
